@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Blog",
+    "title": "Blog",
+    "alias": "blog",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Blog\\App\\Providers\\BlogServiceProvider"
+}
+
