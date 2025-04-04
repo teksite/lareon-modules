@@ -7,9 +7,11 @@
     @endsection
     @section('header.end')
         @parent
-        <x-lareon::link.trash :href="route('admin.tags.destroy', $tag)" can="admin.tag.delete"/>
+        <x-lareon::link.delete :href="route('admin.tags.destroy', $tag)" can="admin.tag.delete"/>
     @endsection
     @section('form')
-        <x-lareon::sections.text :value="$tag->title" :title="__('title')" name="title" :placeholder="__('enter a unique :title',['title'=>__('title')])" :required="true"/>
+        <x-lareon::box>
+            <x-lareon::sections.text :value="$tag->title" :title="__('title')" name="title" :placeholder="__('enter a unique :title',['title'=>__('title')])" :required="true"/>
+        </x-lareon::box>
     @endsection
 </x-lareon::admin-editor-layout>

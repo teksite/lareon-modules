@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
-            $table->timestamps();
         });
         Schema::create('tag_models', function (Blueprint $table) {
             $table->foreignId('tag_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->morphs('model');
+            $table->primary(['tag_id', 'model_id', 'model_type']);
         });
     }
 

@@ -17,7 +17,7 @@
                         <td>
                             <div class="action">
                                 <x-lareon::link.edit :href="route('admin.tags.edit' , $tag)" can="admin.tag.edit"/>
-                                <x-lareon::link.trash :href="route('admin.tags.destroy' , $tag)" can="admin.tag.delete"/>
+                                <x-lareon::link.delete :href="route('admin.tags.destroy' , $tag)" can="admin.tag.delete"/>
                             </div>
                         </td>
                     </tr>
