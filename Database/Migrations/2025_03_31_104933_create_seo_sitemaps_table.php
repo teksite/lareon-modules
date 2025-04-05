@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('changefreq', ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'])->default('monthly');
             $table->timestamp('lastmod')->nullable();
             $table->text('image')->nullable();
+            $table->text('video')->nullable();
             $table->timestamp('active')->nullable()->default(now());
             $table->timestamps();
 

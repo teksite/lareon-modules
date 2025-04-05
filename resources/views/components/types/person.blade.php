@@ -22,8 +22,8 @@
     <div class="mb-3 grid gap-3 md:grid-cols-2">
         <div class="">
             <x-lareon::input.label title="{{__('company')}}" for="schema_company"/>
-            <x-lareon::input.text id="schema_company" name="seo[schema][company]" class="block w-full mb-3" value="{{$value['company'] ?? ''}}"/>
-            <x-lareon::input.error :messages="$errors->get('seo.schema.company')"/>
+            <x-lareon::input.text id="schema_company" name="seo[schema][company][name]" class="block w-full mb-3" value="{{$value['company']['name'] ?? ''}}"/>
+            <x-lareon::input.error :messages="$errors->get('seo.schema.company.name')"/>
         </div>
         <div class="">
             <x-lareon::input.label title="{{__('position')}}" for="schema_position"/>
@@ -31,10 +31,11 @@
             <x-lareon::input.error :messages="$errors->get('seo.schema.position')"/>
         </div>
     </div>
-    <x-seo::sections.sameas name="seo[schema]" :value="old('eo.schema.sameas') ?? $value['sameas'] ?? []" />
-
-
-
-
+        <fieldset class="fieldset">
+            <legend>
+                {{__('social media')}}
+            </legend>
+            <x-seo::sections.sameas name="seo[schema]" :value="old('seo.schema.sameas') ?? $value['sameas'] ?? []" />
+        </fieldset>
 
 </section>

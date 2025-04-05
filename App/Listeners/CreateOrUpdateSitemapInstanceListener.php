@@ -43,7 +43,7 @@ class CreateOrUpdateSitemapInstanceListener
             } else {
                 $active = null;
             }
-            SeoSitemap::query()->updateOrCreate(
+           SeoSitemap::query()->updateOrCreate(
                 [
                     'model_type' => get_class($instance),
                     'model_id' => $instance->id
@@ -53,7 +53,8 @@ class CreateOrUpdateSitemapInstanceListener
                     'priority' => $sitemapData['priority'] ?? 0.5,
                     'changefreq' => $sitemapData['changefreq'] ?? 'yearly',
                     'lastmod' => $instance->published_at ?? $instance->updated_at ?? $instance->created_at ?? now(),
-                    'image' => isset($sitemapData['image']) && count($sitemapData['image']) ? $sitemapData['image'] : [$instance->featured_image],
+                    'image' => isset($sitemapData['images']) && count($sitemapData['images']) ? $sitemapData['images'] : [$instance->featured_image],
+                    'videos' => isset($sitemapData['videos']) && count($sitemapData['videos']) ? $sitemapData['videos'] : null,
                     'active' => $active,
                 ]
             );

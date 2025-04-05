@@ -15,6 +15,7 @@ class SeoSitemap extends Model
         "lastmod"=>"datetime",
         "changefreq"=>"string",
         "image"=>JsonCast::class,
+        "video"=>JsonCast::class,
     ];
 
     static function rulesForModels() :array
@@ -22,8 +23,8 @@ class SeoSitemap extends Model
        return [
            "seo.sitemap.priority"=>'string|required',
            "seo.sitemap.changefreq"=>['required','string'],
-           "seo.sitemap.image"=>'nullable|sometimes|array',
-           "seo.sitemap.video"=>'nullable|sometimes|array',
+           "seo.sitemap.images"=>'nullable|sometimes|array',
+           "seo.sitemap.videos"=>'nullable|sometimes|array',
        ];
     }
 }

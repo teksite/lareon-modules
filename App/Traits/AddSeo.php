@@ -11,14 +11,23 @@ trait AddSeo
 {
     use AddToSitemap, AddToSeoModel;
 
-    public function getSeo()
+    public function getSeo(array $types = ['meta', 'schema', 'sitemap'])
     {
-        $meta=$this->seo->toArray();
-        $sitemap=$this->sitemap->toArray();
-        return [
-            'meta'=>Arr::except($meta, ['schema']) ?? [],
-            'schema'=>Arr::only($meta, ['schema']) ?? [],
-            'sitemap'=>$sitemap,
-        ];
+        $data = [];
+        if (in_array('meta', $types) || in_array('schema', $types)) {
+            $meta = $this->seo->toArray();
+            if (in_array('schema', $types)) {
+                $data['schema'] = Arr::only($meta, ['schema']) ?? [];
+            }
+            if (in_array('meta', $types)) {
+                $data['meta'] = Arr::except($meta, ['schema']) ?? [];
+            }
+        }
+        if (in_array('sitemap', $types)) {
+            $data['sitemap'] = $this->sitemap->toArray();
+
+        }
+
+       return $data;
     }
 }

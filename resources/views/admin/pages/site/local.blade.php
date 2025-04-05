@@ -35,7 +35,7 @@
                                            </optgroup>
                                        @endforeach
                                    </x-lareon::input.select>
-                                   <x-lareon::input.error :messages="get_error($errors , 'local_business[value][currency]')"/>
+                                   <x-lareon::input.error :messages="get_error($errors , 'local_business[value][type]')"/>
                                </td>
                            </tr>
                            {{--Title--}}

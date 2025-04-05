@@ -57,7 +57,6 @@
                     <x-lareon::button.solid type="button" role="button" title="{{__('add title')}}" id="addDynamicFAQ" @click="addNewField()">
                         {{__('add')}}
                     </x-lareon::button.solid>
-
                 </div>
             </div>
         </div>

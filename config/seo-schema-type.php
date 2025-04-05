@@ -12,8 +12,8 @@ return [
         'FAQPage' => ['FAQPage'],
         'JobPosition' => [
             'employmentType'=>[
-                'Full-time'=>'full time',
-                'Part-time'=>'part time',
+                'Full_time'=>'full time',
+                'Part_time'=>'part time',
                 'Contractor'=>'contractor',
                 'Temporary'=> 'temporary',
                 'Internship'=>'internship',
