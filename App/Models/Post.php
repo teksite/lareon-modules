@@ -27,7 +27,7 @@ class Post extends Model implements HasSeo
     protected $fillable = ['user_id', 'title', 'slug', 'body', 'excerpt', 'featured_image', 'publish_status', 'published_at', 'template',];
 
     protected $casts = [
-        'slug' => SlugCast::class . ':posts.show',
+        'slug' => SlugCast::class,
         'featured_image' => ImageCast::class,
         'status' => PublishStatusEnum::class,
         'published_at' => 'datetime',
@@ -57,7 +57,7 @@ class Post extends Model implements HasSeo
 
     public function path(): string
     {
-        return route('posts.show', $this);
+        return route('blog.posts.show', $this);
     }
 
     public function breadcrumb(): array

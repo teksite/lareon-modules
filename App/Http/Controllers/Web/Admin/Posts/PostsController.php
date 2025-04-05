@@ -61,7 +61,7 @@ class PostsController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
-        return redirect()->route('blog.posts.show', $post->slug);
+        return redirect($post->path());
     }
 
     /**

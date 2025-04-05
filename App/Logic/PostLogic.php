@@ -24,7 +24,6 @@ class PostLogic
     public function register(array $inputs)
     {
         return app(ServiceWrapper::class)(function () use ($inputs) {
-
             $post = Post::query()->create(Arr::except($inputs, ['tag', 'meta', 'seo']));
             $post->categories()->attach($inputs['categories']);
             $post->assignTags($inputs['tags'] ?? null);
@@ -37,6 +36,7 @@ class PostLogic
 
     public function change(array $inputs, Post $post)
     {
+
         return app(ServiceWrapper::class)(function () use ($inputs, $post) {
             $post->update(Arr::except($inputs, ['tag', 'meta', 'seo']));
             $post->categories()->sync($inputs['categories']);

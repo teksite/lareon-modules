@@ -27,9 +27,8 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
-//        dd(request()->all());
         return array_merge(Post::rules(), Tag::rulesForModels() , Category::rulesForModels() ,SeoSitemap::rulesForModels() , SeoModel::rulesForModels(),
-            ['slug' => ['required','string','max:255',Rule::unique('blog_posts' ,'title')->ignore($this->post->id)]],
+            ['slug' => ['required','string','max:255',Rule::unique('blog_posts' ,'slug')->ignore($this->post->id)]],
         );
 
     }
