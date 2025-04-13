@@ -1,0 +1,50 @@
+{
+    "name": "teksite/questionnaire",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Questionnaire"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Questionnaire\\": "/",
+            "Lareon\\Modules\\Questionnaire\\App\\": "App/",
+            "Lareon\\Modules\\Questionnaire\\Database\\Factories\\": "Database/Factories/",
+            "Lareon\\Modules\\Questionnaire\\Database\\Seeders\\": "Database/Seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Questionnaire\\Tests\\": "Tests/"
+        }
+    }
+}

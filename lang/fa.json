@@ -1,0 +1,16 @@
+{
+    "questionnaires": "پرسش نامه‌ها",
+    "questionnaire": "پرسش نامه",
+    "forms": "فرم‌ها",
+    "form": "فرم",
+    "inboxes": "صندوق‌های ورودی",
+    "inbox": "صندوق ورودی",
+    "inset form fields (html)": "فیلد‌های را وارد کنید (html)",
+    "has file":"فایل دارد",
+    "send admin notification via": "ارسال اعلامیه ادمین با استفاده از",
+    "response to client":"پاسخ به کاربر",
+    "forms are used to collect user input, such as contact information, or feedback": "فرم‌ها برای جمع‌آوری ورودی های کاربران، مانند اطلاعات تماس یا بازخورد استفاده می‌شوند",
+    "inboxes are collected data from forms": "صندوق ورودی، داده‌های جمع آوری‌شده فرم‌ها هستند"
+
+
+}

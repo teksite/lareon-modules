@@ -1,0 +1,53 @@
+<?php
+
+namespace Lareon\Modules\Questionnaire\App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Crypt;
+use Lareon\Modules\Questionnaire\App\Models\Form;
+use Lareon\Modules\Questionnaire\App\Models\Inbox;
+
+class NewRegistrationRequest extends FormRequest
+{
+    public $form;
+
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $this->loadForm();
+        $formRules = $this->form->validationRules->rules->pluck('rules', 'field')->toArray();
+        return array_merge(Inbox::rulesForModels(), $formRules);
+    }
+
+    protected function passedValidation(): void
+    {
+        $this->merge(['form' => $this->form]);
+    }
+
+    protected function loadForm(): void
+    {
+        $identify = $this->input('data_info.identify');
+
+        if (is_null($identify)) abort(403, 'something gos wrong, suspicion behavior');
+
+        try {
+            $formId = Crypt::decrypt($identify);
+            $this->form = Form::findOrFail($formId);
+        } catch (\Exception $e) {
+            abort(404, 'something gos wrong');
+        }
+    }
+
+}
