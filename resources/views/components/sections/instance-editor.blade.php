@@ -1,8 +1,8 @@
-@props(['value'=>[] ,'instance'=>null ,'accordion'=>true ,'open'=>true])
+@props(['value'=>[] ,'instance'=>null ,'accordion'=>true ,'open'=>true ,'url'=>route('admin.ajax.seo.schema_model')])
 <x-lareon::accordion.box :title="__('seo')" :accordion="$accordion" :open="$open">
     <input type="hidden" value="{{!is_null($instance) ? get_class($instance) : ''}}"  id="instance">
     <input type="hidden" value="{{!is_null($instance) ? $instance->id : ''}}"  id="instanceId">
-    <input type="hidden" value="{{route('admin.ajax.seo.schema_loader')}}"  id="schema_loader__url">
+    <input type="hidden" value="{{$url}}"  id="schema_loader__url">
     <div x-data="{ tabs: [
         { id: 1, title: 'meta tags', active: true },
         { id: 2, title: 'schema', active: false },

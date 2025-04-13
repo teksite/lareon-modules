@@ -2,7 +2,9 @@
 
 namespace Lareon\Modules\Seo\App\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Lareon\Modules\Seo\App\Console\Command\GenerateSitemapCommand;
 
 class SeoServiceProvider extends ServiceProvider
 {
@@ -31,7 +33,9 @@ class SeoServiceProvider extends ServiceProvider
          */
         protected function registerCommands(): void
         {
-            // $this->commands([]);
+             $this->commands([
+                 GenerateSitemapCommand::class
+             ]);
         }
 
         /**
@@ -39,10 +43,10 @@ class SeoServiceProvider extends ServiceProvider
          */
         protected function registerCommandSchedules(): void
         {
-            // $this->app->booted(function () {
-            //     $schedule = $this->app->make(Schedule::class);
-            //     $schedule->command('inspire')->hourly();
-            // });
+            $this->app->booted(function () {
+                $schedule = $this->app->make(Schedule::class);
+                $schedule->command('sitemap:regenerate')->dailyAt('02:00');
+            });
         }
 
         protected function registerConfig(): void{

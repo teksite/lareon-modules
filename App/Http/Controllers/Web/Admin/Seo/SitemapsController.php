@@ -7,11 +7,12 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Seo\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Seo\App\Logic\SitemapLogic;
+use Lareon\Modules\Seo\App\Logic\SitemapScannerLogic;
 use Teksite\Lareon\Facade\WebResponse;
 
 class SitemapsController extends Controller implements HasMiddleware
 {
-    public function __construct(public SitemapLogic $logic)
+    public function __construct(public SitemapLogic $logic , public SitemapScannerLogic $service)
     {
     }
 
@@ -30,6 +31,11 @@ class SitemapsController extends Controller implements HasMiddleware
     public function generate()
     {
         $res = $this->logic->generateSitemaps();
+        return WebResponse::byResult($res ,route('admin.seo.sitemap.index'))->go();
+    }
+    public function scan()
+    {
+        $res = $this->service->scan();
         return WebResponse::byResult($res ,route('admin.seo.sitemap.index'))->go();
     }
 

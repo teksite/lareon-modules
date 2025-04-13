@@ -50,25 +50,46 @@
             <x-lareon::input.error :messages="$errors->get('seo.schema.experienceRequirements')"/>
         </div>
     </div>
+    <div class="mb-3">
+        <x-lareon::input.label title="{{__('industry')}}" for="schema_industry"/>
+        <x-lareon::input.text  id="schema_industry" name="seo[schema][industry]" class="block w-full mb-3" value="{{$value['industry'] ?? ''}}"/>
+        <x-lareon::input.error :messages="$errors->get('seo.schema.industry')"/>
+    </div>
+    {{--  SKILSS responsibilities --}}
+   <div class="mb-3 grid gap-3 md:grid-cols-2">
     {{--  SKILSS  --}}
-    <div class="">
-        <x-lareon::input.label title="{{__('skills')}}" for="schema_skills"/>
-        <x-lareon::input.text  id="schema_skills" name="seo[schema][skills]" class="block w-full mb-3" value="{{$value['skills'] ?? ''}}" :placeholder="__('separate with ,')"/>
-        <x-lareon::input.error :messages="$errors->get('seo.schema.skills')"/>
-    </div>
-    <div class="">
-        {{--  responsibilities  --}}
-        <x-lareon::input.label title="{{__('responsibilities')}}" for="responsibilities"/>
-        <x-lareon::input.text  id="responsibilities" name="seo[schema][responsibilities]" class="block w-full mb-3" value="{{$value['responsibilities'] ?? ''}}" :placeholder="__('separate with ,')"/>
-        <x-lareon::input.error :messages="$errors->get('seo.schema.responsibilities')"/>
-    </div>
-    {{--applicantLocationRequirements--}}
-    <div class="">
-       <div class="flex items-center gap-3">
-           <x-lareon::input.checkbox  id="applicantLocationRequirements" name="seo[schema][applicantLocationRequirements]" value="1" :checked="isset($value['applicantLocationRequirements'])"/>
-           <x-lareon::input.label title="{{__('remote')}}" for="applicantLocationRequirements" />
+       <div class="">
+           <x-lareon::input.label title="{{__('skills')}}" for="schema_skills"/>
+           <x-lareon::input.text  id="schema_skills" name="seo[schema][skills]" class="block w-full mb-3" value="{{$value['skills'] ?? ''}}" :placeholder="__('separate with ,')"/>
+           <x-lareon::input.error :messages="$errors->get('seo.schema.skills')"/>
        </div>
-        <x-lareon::input.error :messages="$errors->get('seo.schema.applicantLocationRequirements')"/>
+       <div class="">
+           {{--  responsibilities  --}}
+           <x-lareon::input.label title="{{__('responsibilities')}}" for="responsibilities"/>
+           <x-lareon::input.text  id="responsibilities" name="seo[schema][responsibilities]" class="block w-full mb-3" value="{{$value['responsibilities'] ?? ''}}" :placeholder="__('separate with ,')"/>
+           <x-lareon::input.error :messages="$errors->get('seo.schema.responsibilities')"/>
+       </div>
+   </div>
+    {{--applicantLocationRequirements--}}
+    <div class="mb-3 grid gap-3 md:grid-cols-2 items-center">
+        {{--employmentType--}}
+        <div>
+            <x-lareon::input.label :title="__('type')"  for="employmentType"/>
+            <x-lareon::input.select id="employmentType" class="block w-full" name="seo[schema][employmentType]">
+                @foreach(config('seo.schema-type.pageType.JobPosition.employmentType') as $type=>$title)
+                    <option value="{{$type}}" {{isset($value['employmentType'] ) && $value['employmentType']== $type ? 'selected' : ''}}>{{__($title)}}</option>
+                @endforeach
+            </x-lareon::input.select>
+        </div>
+        {{--applicantLocationRequirements | employmentType--}}
+        <div class="">
+            <div class="flex items-center gap-3">
+                <x-lareon::input.checkbox  id="applicantLocationRequirements" name="seo[schema][applicantLocationRequirements]" value="1" :checked="isset($value['applicantLocationRequirements'])"/>
+                <x-lareon::input.label title="{{__('remote')}}" for="applicantLocationRequirements" />
+            </div>
+            <x-lareon::input.error :messages="$errors->get('seo.schema.applicantLocationRequirements')"/>
+        </div>
+
     </div>
     <fieldset class="fieldset">
         <legend class="legend">{{__('salary')}}</legend>

@@ -54,7 +54,7 @@ class SeoSite extends Model
                 'local_business.value.geo'=>'required|array',
                 'local_business.value.geo.*'=>'nullable|string',
                 'local_business.value.openingHours'=>'required|array',
-                'local_business.value.openingHours.*'=>'nullable|string',
+                'local_business.value.openingHours.*'=>'nullable|array',
                 'local_business.value.sameas'=>'nullable|array|sometimes',
                 'local_business.value.sameas.*'=>'string|nullable',
             ],

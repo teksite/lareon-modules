@@ -24,6 +24,7 @@ Route::prefix('seo')->name('seo.')->group(function () {
     Route::prefix('sitemap')->name('sitemap.')->group(function () {
         Route::get('/', [SitemapsController::class, 'index'])->name('index');
         Route::patch('/', [SitemapsController::class, 'generate'])->name('generate');
+        Route::get('/scan', [SitemapsController::class, 'scan'])->name('scan');
     });
 
 });

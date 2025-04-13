@@ -14,7 +14,7 @@ class SchemaController extends Controller
     {
     }
 
-    public function get(GetSchemaContentRequest $request)
+    public function get_model(GetSchemaContentRequest $request)
     {
         $result = $this->logic->getView($request->validated());
         return JsonResponse::response()->byResult($result)->reply();

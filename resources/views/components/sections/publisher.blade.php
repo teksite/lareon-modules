@@ -13,9 +13,9 @@
             <x-lareon::input.error :messages="get_error($errors, $name.'[publisher][name]')"/>
         </div>
         <div>
-            <x-lareon::input.label :title="__('publisher logo')" for="{{$rand}}_schema_publisherUrl"/>
-            <x-lareon::input.text type="url" dir="ltr" id="{{$rand}}_schema_publisherUrl" name="{{$name}}[publisher][url]" value="{{$value['url'] ?? ''}}" class="block w-full mb-3"/>
-            <x-lareon::input.error :messages="get_error($errors, $name.'[publisher][url]')"/>
+            <x-lareon::input.label :title="__('publisher logo')" for="{{$rand}}_schema_publisherLogo"/>
+            <x-lareon::input.text type="url" dir="ltr" id="{{$rand}}_schema_publisherLogo" name="{{$name}}[publisher][logo]" value="{{$value['logo'] ?? ''}}" class="block w-full mb-3"/>
+            <x-lareon::input.error :messages="get_error($errors, $name.'[publisher][logo]')"/>
         </div>
     </div>
 </fieldset>

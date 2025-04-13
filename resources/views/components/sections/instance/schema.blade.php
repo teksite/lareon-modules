@@ -8,7 +8,7 @@
             <x-lareon::input.label for="seo_type" :title="__('schema type')"/>
             <x-lareon::input.select id="seo_type" class="block w-full">
                 @foreach(config('seo.schema-type.pageType') as $type=>$specificType)
-                    <option @selected(isset($data['schema']['seo_type']) && $data['schema']['seo_type'] === $type) >
+                    <option @selected(isset($data['seo_type']) && $data['seo_type'] === $type) >
                         {{$type}}
                     </option>
                 @endforeach

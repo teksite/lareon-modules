@@ -28,9 +28,9 @@
     <div class="mb-3 grid gap-3 md:grid-cols-2">
     {{--Street--}}
         <div >
-            <x-lareon::input.label for="{{$rand}}_street" :title="__('street')"/>
-            <x-lareon::input.text id="{{$rand}}_street" name="{{$name}}[location][street]"  :value="$value['street'] ?? ''" :placeholder="__('street')" :required="true"/>
-            <x-lareon::input.error :messages="get_error($errors , '{{$name}}[location][street]')"/>
+            <x-lareon::input.label for="{{$rand}}_name" :title="__('venue')"/>
+            <x-lareon::input.text id="{{$rand}}_name" name="{{$name}}[location][name]"  :value="$value['name'] ?? ''" :placeholder="__('venue')" :required="true"/>
+            <x-lareon::input.error :messages="get_error($errors , '{{$name}}[location][name]')"/>
         </div>
         {{--Zip Code--}}
         <div >
@@ -38,6 +38,11 @@
             <x-lareon::input.text id="{{$rand}}_zip_code" dir="ltr" type="number" name="{{$name}}[location][zip_code]"  :value="$value['zip_code'] ?? ''" :placeholder="__('zip code')" :required="true"/>
             <x-lareon::input.error :messages="get_error($errors , '{{$name}}[location][zip_code]')"/>
         </div>
+    </div>
+    <div class="mb-3">
+        <x-lareon::input.label for="{{$rand}}_street" :title="__('street')"/>
+        <x-lareon::input.text id="{{$rand}}_street" name="{{$name}}[location][street]"  :value="$value['street'] ?? ''" :placeholder="__('street')" :required="true"/>
+        <x-lareon::input.error :messages="get_error($errors , '{{$name}}[location][street]')"/>
     </div>
 
 </fieldset>

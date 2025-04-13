@@ -9,19 +9,12 @@
             <p>
                 {{__('if any links are missing from the sitemap, contact your site administrator to resolve the issue')}}.
             </p>
-            <form method="POST">
-                @csrf
-                @method('PATCH')
-                <div class="mt-6 flex justify-end">
-                    <x-lareon::button.solid color="blue" type="submit" role="button" title="generate">{{__('update')}}</x-lareon::button.solid>
-                </div>
-            </form>
-        </x-lareon::box>
-        <x-lareon::box>
-            <div class="flex items-center justify-start gap-3">
+           <div class="flex flex-col md:flex-row gap-6 justify-between items-center  mt-6">
+               <div class="flex items-center justify-start gap-3">
                <span class="group group relative">
                    <span
-                       class="hidden shadow group-hover:block absolute rounded-2xl bg-white w-96 p-3 start-0 end-auto lg:start-auto lg:end-0  text-sm p">
+
+                       class="hidden shadow group-hover:block absolute rounded-2xl bg-white w-96 p-3  end-auto start-0 lg:end-aut0 lg:start-0  text-sm p">
                        "auto":{{__('a robot automatically crawls the entire website, detects all URLs, and registers them in the sitemap')}}
                        <br>
                        "database":{{__('only URLs stored in the database are registered in the sitemap')}}
@@ -33,15 +26,32 @@
                    <i class="p-1 w-6 h-6 border border-blue-600 tkicon fill-none stroke-current regular-link rounded-full  "
                       data-icon="exclamation"></i>
                </span>
-                <div>
-                    <p>{{__('sitemap type')}}:
-                        <span class="font-bold">{{config('lareon.cms.sitemap.file')}}</span>
-                    </p>
-                    <p>{{__('crawling type')}}:
-                        <span class="font-bold">{{config('lareon.cms.sitemap.crawl')}}</span>
-                    </p>
-                </div>
-            </div>
+                   <div>
+                       <p>{{__('sitemap type')}}:
+                           <span class="font-bold">{{config('lareon.cms.sitemap.file')}}</span>
+                       </p>
+                       <p>{{__('crawling type')}}:
+                           <span class="font-bold">{{config('lareon.cms.sitemap.crawl')}}</span>
+                       </p>
+                   </div>
+               </div>
+               <form method="POST">
+                   @csrf
+                   @method('PATCH')
+                   <div class="mt-6 flex justify-end">
+                       <x-lareon::button.solid color="blue" type="submit" role="button" title="generate">{{__('update')}}</x-lareon::button.solid>
+                   </div>
+               </form>
+           </div>
+        </x-lareon::box>
+        <x-lareon::box>
+            <p class="mb-6">
+                {{__('sometimes, due to server interruptions, certain instances may not be added to the sitemap list. In such cases, click the \'Scan and Add\' button to automatically add them')}}
+            </p>
+            <p class="mb-6">
+                {{__('then click on the button \'update\' to regenerate sitemap(s)' )}}
+            </p>
+            <x-lareon::link.btn-outline href="{{route('admin.seo.sitemap.scan')}}" :title="__('scan and add')" />
         </x-lareon::box>
     </section>
 </x-lareon::admin-layout>

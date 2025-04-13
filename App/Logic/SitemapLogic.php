@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Seo\App\Logic;
 
+use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Modules\Seo\App\Models\SeoSitemap;
 use Psr\Http\Message\UriInterface;
 use Spatie\Sitemap\SitemapGenerator;
@@ -43,6 +44,7 @@ class SitemapLogic
             };
         });
     }
+
 
     private function ensureSitemapsDirectoryExists(): void
     {

@@ -16,14 +16,10 @@ trait AddToSeoModel
     }
 
 
-    public function addToSeo(array $data): void
-    {
-      // $this->seo()->create(new SeoSitemap($data));
-    }
 
     public function removeModelSeo(): void
     {
-       $this->seo()->delete();
+        $this->seo()->delete();
     }
 
 }

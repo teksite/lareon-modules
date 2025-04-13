@@ -21,8 +21,8 @@ class SchemaLogic
                 : collect([])->toArray();
             $meta = Arr::except($seoData, 'schema');
             $value = [
-                'title' => $meta['title'], 'description' => $meta['description'],
-                ...$seoData['schema'],
+                'title' => $meta['title'] ?? '', 'description' => $meta['description'] ?? '',
+                ...$seoData['schema'] ?? [],
             ];
             $name = 'seo[schema]';
 
@@ -44,53 +44,5 @@ class SchemaLogic
             return $view->render();
         }, withHandler: false);
 
-    }
-
-    public function generate(Model $model)
-    {
-        $data = $model->getSeo(['meta', 'schema']);
-        $tags = $this->generateMeta($data['meta'] ?? [], $model->toArray());
-        $twitter = $this->generateTwitter($data['meta'] ?? [], $model->toArray());
-        dd($twitter);
-    }
-
-    public function generateMeta(array $meta, array $instance)
-    {
-        $title = $meta['title'] ?? $instance['title'] ?? $instance['name'] ?? config('app.name');
-        $description = $meta['description'] ?? $instance['excerpt'] ?? null;
-
-        $followable = $meta['follow'] ?? 'follow';
-        $indexable = $meta['indexable'] ?? 'index';
-        $conical = $meta['conical_url'] ?? request()->url();
-        $keyword = isset($meta['keywords']) ? implode(', ', $meta['keywords']) : null;
-
-        $tagHTML = "<title>$title</title> \n";
-        $tagHTML .= "<meta name='robots' content='$indexable, $followable'> \n";
-        $tagHTML .= "<link rel='canonical' href='$conical' /> \n";
-        if ($description) $tagHTML .= "<meta name='description' content='$description'> \n";
-        if ($keyword) $tagHTML .= "<meta name='keywords' content='$keyword'> \n";
-
-        return $tagHTML;
-    }
-
-    public function generateTwitter(array $meta, array $instance)
-    {
-        $title = $meta['title'] ?? $instance['title'] ?? $instance['name'];
-        $description = $meta['description'] ?? $instance['excerpt'] ?? null;
-        $image = $instance['featured_image'] ?? $instance['avatar'] ?? null;
-        $imgAlt = $instance['title'] ?? $instance['name'] ?? null;
-        $url = $meta['conical_url'] ?? request()->url();
-        $site = config('app.name');
-
-
-        $twitterHTML = "<meta name='twitter:card' content='summary'> \n";
-        $twitterHTML .= "<meta name='twitter:title' content='$title'> \n";
-        $twitterHTML .= "<meta name='twitter:site' content='$site'> \n";
-        $twitterHTML .= "<meta name='twitter:url' content='$url'> \n";
-        if ($description) $twitterHTML .= "<meta name='twitter:description' content='$description'> \n";
-        if ($description) $twitterHTML .= "<meta name='twitter:image' content='$image'> \n";
-        if ($description) $twitterHTML .= "<meta name='twitter:alt' content='$imgAlt'> \n";
-
-        return $twitterHTML;
     }
 }

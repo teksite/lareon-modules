@@ -3,7 +3,8 @@
 namespace Lareon\Modules\Seo\App\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Lareon\Modules\Seo\App\Events\CreateOrUpdateInstanceEvent;
+use Lareon\CMS\App\Events\CreateOrUpdateInstanceEvent;
+use Lareon\Modules\Seo\App\Listeners\CreateOrUpdateSeoInstanceListener;
 use Lareon\Modules\Seo\App\Listeners\CreateOrUpdateSitemapInstanceListener;
 
 class EventServiceProvider  extends ServiceProvider
@@ -15,7 +16,8 @@ class EventServiceProvider  extends ServiceProvider
      */
     protected $listen = [
         CreateOrUpdateInstanceEvent::class => [
-            CreateOrUpdateSitemapInstanceListener::class
+            CreateOrUpdateSitemapInstanceListener::class,
+            CreateOrUpdateSeoInstanceListener::class
         ]
     ];
 
