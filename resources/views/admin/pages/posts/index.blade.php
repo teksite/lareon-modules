@@ -7,14 +7,18 @@
     @endsection
     @section('list')
         <x-lareon::box>
-            <x-lareon::table :headers="['id'=>'#','title'=>__('title'),]">
+            <x-lareon::table :headers="['id'=>'#',__('image'),'title'=>__('title'),'publish_status'=>__('publish status'),'published_at'=>__('published at'),]">
                 @if(count($posts))
                 @foreach($posts as $key=>$post)
                     <tr>
                         <td class="p-3">{{$posts->firstItem() + $key}}</td>
+                        <td class="p-3"><img src="{{$post->featured_image}}" alt="{{$post->title}}" width="90" height="60" loading="lazy" decoding="async" fetchpriority="low"></td>
                         <td>{{$post->title}}</td>
+                        <td>{{$post->publish_status}}</td>
+                        <td>{{$post->published_at ?? $post->created_at}}</td>
                         <td>
                             <div class="action">
+                                <x-lareon::link.show :href="$post->path()"/>
                                 <x-lareon::link.edit :href="route('admin.blog.posts.edit' , $post)" can="admin.blog.post.edit"/>
                                 <x-lareon::link.delete :href="route('admin.blog.posts.destroy' , $post)" can="admin.blog.post.delete"/>
                             </div>

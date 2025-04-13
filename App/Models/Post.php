@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Lareon\CMS\App\Cast\ImageCast;
 use Lareon\CMS\App\Enums\PublishStatusEnum;
@@ -20,7 +21,7 @@ use Teksite\Extralaravel\Casts\SlugCast;
 
 class Post extends Model implements HasSeo
 {
-    use SoftDeletes ,HasTag , AddSeo;
+    use SoftDeletes, HasTag, AddSeo;
 
     protected $table = 'blog_posts';
 
@@ -29,7 +30,7 @@ class Post extends Model implements HasSeo
     protected $casts = [
         'slug' => SlugCast::class,
         'featured_image' => ImageCast::class,
-        'status' => PublishStatusEnum::class,
+        'publish_status' => PublishStatusEnum::class,
         'published_at' => 'datetime',
     ];
 
@@ -62,10 +63,11 @@ class Post extends Model implements HasSeo
 
     public function breadcrumb(): array
     {
-        return [
-            __('blog') => route('posts.index'),
-            $this->attributes['title'] => $this->path(),
-        ];
+        $breadcrumb= [];
+        if (Route::has('blog.posts.index')) $breadcrumb[__('blog')] = route('blog.posts.index');
+        if (Route::has('blog.posts.show')) $breadcrumb[$this->attributes['title']] = $this->path();
+
+        return $breadcrumb;
     }
 
     public function user(): BelongsTo
@@ -84,15 +86,15 @@ class Post extends Model implements HasSeo
      * @param array<string>|string $columns
      * @return Collection
      */
-    public function getCategories(array|string $columns=['id', 'title']) :Collection
+    public function getCategories(array|string $columns = ['id', 'title']): Collection
     {
-        $columns=is_array($columns) ? $columns : [$columns];
+        $columns = is_array($columns) ? $columns : [$columns];
         return $this->categories()->select($columns)->get();
     }
 
 
     public function sitemapGroup(): string
     {
-        return 'blog';
+        return 'blog_post';
     }
 }

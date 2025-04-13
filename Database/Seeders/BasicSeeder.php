@@ -15,11 +15,8 @@ class BasicSeeder extends Seeder
     {
         Category::query()->insert([
             [
-                'title'=>'uncategorized',
-                'slug'=>'uncategorized',
-            ], [
-                'title'=>'articles',
-                'slug'=>'articles',
+                'title'=>'general',
+                'slug'=>'general',
             ]
         ]);
     }

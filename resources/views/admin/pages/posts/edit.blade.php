@@ -18,7 +18,6 @@
         <x-lareon::sections.textarea :title="__('excerpt')" name="excerpt" :placeholder="__('write a :title' ,['title'=>__('excerpt')])" :required="false" :open="false">{{old('excerpt') ?? $post->excerpt}}</x-lareon::sections.textarea>
         <x-lareon::sections.editor :title="__('body')" name="body" :placeholder="__('write a :title' ,['title'=>__('body')])" :required="false" rows="30" :open="true">{{old('body') ?? $post->body}}</x-lareon::sections.editor>
 
-
         <x-seo::sections.instance-editor :instance="$post" :value="old('seo') ?? $post->getSeo()"/>
 
 

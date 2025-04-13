@@ -3,9 +3,9 @@
 namespace Lareon\Modules\Blog\App\Logic;
 
 use Illuminate\Support\Arr;
+use Lareon\CMS\App\Enums\ActionTypesEnum;
+use Lareon\CMS\App\Events\CreateOrUpdateInstanceEvent;
 use Lareon\Modules\Blog\App\Models\Post;
-use Lareon\Modules\Seo\App\Events\CreateOrUpdateInstanceEvent;
-use Lareon\Modules\Seo\App\Models\SeoSitemap;
 use Teksite\Extralaravel\Traits\TrashMethods;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Services\FetchDataService;
@@ -28,7 +28,7 @@ class PostLogic
             $post->categories()->attach($inputs['categories']);
             $post->assignTags($inputs['tags'] ?? null);
 
-            event(new CreateOrUpdateInstanceEvent($post ,$inputs));
+            event(new CreateOrUpdateInstanceEvent($post ,$inputs ,ActionTypesEnum::NEW));
 
             return $post;
         });
@@ -42,7 +42,7 @@ class PostLogic
             $post->categories()->sync($inputs['categories']);
             $post->assignTags($inputs['tags'] ?? null);
 
-            event(new CreateOrUpdateInstanceEvent($post ,$inputs));
+            event(new CreateOrUpdateInstanceEvent($post ,$inputs ,ActionTypesEnum::CHANGE));
             return $post;
         });
     }
@@ -51,7 +51,7 @@ class PostLogic
     {
         return app(ServiceWrapper::class)(function () use ($post) {
 
-            event(new CreateOrUpdateInstanceEvent($post));
+            event(new CreateOrUpdateInstanceEvent($post , type:ActionTypesEnum::DELETE));
             $post->delete();
 
         });
