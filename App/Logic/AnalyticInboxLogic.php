@@ -2,107 +2,113 @@
 
 namespace Lareon\Modules\Questionnaire\App\Logic;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Teksite\Handler\Actions\ServiceWrapper;
 
 class AnalyticInboxLogic
 {
-
-    public function generate($startDate, $endDate, $range)
+    public function generate($startDate = null, $endDate = null, $range = 'month')
     {
+        $startDate = Carbon::parse($startDate ?? now()->startOfMonth())->startOfDay();
+        $endDate = Carbon::parse($endDate ?? now()->endOfMonth())->endOfDay();
+
         return app(ServiceWrapper::class)(function () use ($startDate, $endDate, $range) {
-
-            $forms = Form::all();
-
-            [$startDate, $endDate, $range] = $this->getDateRangeAndType($startDate, $endDate, $range);
-            $dateRange = $this->generateDateRange($startDate, $endDate, $range);
-            $data = $this->prepareDataSet($forms, $dateRange);
-
-            $labelArray = $this->generateLabels($dateRange);
-            $label = json_encode($labelArray);
-            $dataSet = json_encode($data['dataset']);
+            $dateRanges = $this->generateDateRange($startDate, $endDate, $range);
+            $data = $this->fetchInboxCounts($dateRanges);
+            $chartData = $this->formatForChartJs($data, $dateRanges);
             return [
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-                'range' => $range,
                 'data' => $data,
-                'label' => $label,
-                'dataSet' => $dataSet,
+                'chart' => $chartData,
             ];
         }, hasTransaction: false);
-
-    }
-
-    private function getDateRangeAndType(?string $from = null, ?string $end = null, ?string $rang = null): array
-    {
-        $startDate = $from ? Carbon::create($from) : Carbon::now()->startOfMonth();
-        $endDate = $end ? Carbon::create($end) : Carbon::now()->endOfMonth();
-        $range = $end ?? 'month';
-
-        return [$startDate, $endDate, $range];
     }
 
     private function generateDateRange(Carbon $startDate, Carbon $endDate, string $range): array
     {
-        $dateRange = [];
-        $currentDate = $startDate->copy();
-
-        while ($currentDate->lte($endDate)) {
-            $dateRange[] = $currentDate->format('Y-m-d');
-            $currentDate->add($this->getDateInterval($range));
-        }
-
-        if (end($dateRange) != $endDate->format('Y-m-d')) {
-            $dateRange[] = $endDate->format('Y-m-d');
-        }
-
-        return $dateRange;
-    }
-
-    private function getDateInterval(string $range): \DateInterval
-    {
-        return match ($range) {
-            'year' => new \DateInterval('P1Y'),
-            'week' => new \DateInterval('P1W'),
-            'day' => new \DateInterval('P1D'),
-            default => new \DateInterval('P1M')
+        $interval = match ($range) {
+            'day' => '1 day',
+            'week' => '1 week',
+            'year' => '1 year',
+            default => '1 month',
         };
-    }
 
-    private function prepareDataSet($forms, $dateRange): array
-    {
-        $data = ['dataset' => []];
+        $dates = [];
+        $current = $startDate->copy();
 
-        foreach ($forms as $j => $form) {
-            $data['dataset'][$j]['label'] = $form->title;
-            $data['dataset'][$j]['data'] = $this->countInboxesForDateRanges($form, $dateRange);
-            $data['dataset'][$j]['borderWidth'] = 1;
+        while ($current <= $endDate) {
+            $dates[] = [
+                'start' => $current->copy(),
+                'end' => min($current->copy()->add($interval)->subSecond(), $endDate)
+            ];
+            $current->add($interval);
         }
 
-        return $data;
+        return $dates;
     }
 
-    private function countInboxesForDateRanges($form, $dateRange): array
+    private function fetchInboxCounts(array $dateRanges): array
     {
-        $data = [];
+        $results = Form::with(['inbox' => function ($query) use ($dateRanges) {
+            $query->select('form_id', 'created_at')
+                ->whereBetween('created_at', [
+                    $dateRanges[0]['start'],
+                    $dateRanges[count($dateRanges)-1]['end']
+                ]);
+        }])->cursor();
 
-        for ($i = 0; $i < count($dateRange) - 1; $i++) {
-            $data[] = $form->inbox()->whereBetween('created_at', [$dateRange[$i], $dateRange[$i + 1]])->count();
+        $inboxesGroup = [];
+
+        foreach ($results as $form) {
+            $counts = array_fill(0, count($dateRanges), 0);
+
+            foreach ($form->inbox as $inbox) {
+                foreach ($dateRanges as $index => $range) {
+                    if ($inbox->created_at->between($range['start'], $range['end'])) {
+                        $counts[$index]++;
+                        break;
+                    }
+                }
+            }
+
+            $inboxesGroup[$form->title] = array_combine(
+                array_map(fn($range) => $range['start']->format('Y-m-d'), $dateRanges),
+                $counts
+            );
         }
 
-        return $data;
+        return $inboxesGroup;
     }
 
-    private function generateLabels($dateRange): array
+    private function formatForChartJs(array $data, array $dateRanges): array
     {
-        $labels = [];
+        // Extract labels (dates) from date ranges
+        $labels = array_map(fn($range) => $range['start']->format('Y-m-d'), $dateRanges);
 
-        for ($i = 0; $i < count($dateRange) - 1; $i++) {
-            $labels[] = "{$dateRange[$i]} - {$dateRange[$i + 1]}";
+        // Prepare datasets (one per form)
+        $datasets = [];
+        foreach ($data as $formTitle => $counts) {
+            $datasets[] = [
+                'label' => $formTitle,
+                'data' => array_values($counts), // Counts in the same order as labels
+//                'borderColor' => $this->generateRandomColor(), // Optional: Random color for each form
+//                'backgroundColor' => $this->generateRandomColor(0.2), // Optional: Semi-transparent for bars
+                'fill' => false, // Set to true for filled charts like area charts
+            ];
         }
 
-        return $labels;
+        return [
+            'labels' => $labels,
+            'datasets' => $datasets,
+        ];
+    }
+
+    private function generateRandomColor(float $opacity = 1): string
+    {
+        // Generate a random RGB color
+        $r = mt_rand(0, 255);
+        $g = mt_rand(0, 255);
+        $b = mt_rand(0, 255);
+        return "rgba($r, $g, $b, $opacity)";
     }
 }

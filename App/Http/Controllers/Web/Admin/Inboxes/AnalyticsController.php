@@ -26,13 +26,7 @@ class AnalyticsController extends Controller implements HasMiddleware
     public function show(Request $request)
     {
         $res=$this->logic->generate($request->get('fromDate'), $request->get('toDate'), $request->get('range'))->result;
-        $startDate=$res['startDate'];
-        $endDate=$res['endDate'];
-        $range=$res['range'];
-        $data=$res['data'];
-        $label=$res['label'];
-        $dataSet=$res['dataSet'];
-        return view('questionnaire::admin.pages.analytics.show', compact('startDate', 'endDate', 'range', 'data', 'label', 'dataSet'));
+        return view('questionnaire::admin.pages.analytics.show' ,['chartData'=>$res['chart']]);
     }
 
 }
