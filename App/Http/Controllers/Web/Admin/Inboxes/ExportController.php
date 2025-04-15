@@ -32,7 +32,7 @@ class ExportController extends Controller implements HasMiddleware
 
     public function export(ExportInboxRequest $request)
     {
-        $services = $this->logic->export($request->validated());
-        return $services->data;
+        $res = $this->logic->export($request->validated());
+        return $res->result;
     }
 }

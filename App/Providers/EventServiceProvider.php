@@ -3,6 +3,8 @@
 namespace Lareon\Modules\Questionnaire\App\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Lareon\Modules\Questionnaire\App\Events\NewFormRegisteredEvent;
+use Lareon\Modules\Questionnaire\App\Listeners\NewFormRegisteredListener;
 
 class EventServiceProvider  extends ServiceProvider
 {
@@ -11,7 +13,11 @@ class EventServiceProvider  extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        NewFormRegisteredEvent::class=>[
+            NewFormRegisteredListener::class
+        ]
+    ];
 
     /**
      * Indicates if events should be discovered.

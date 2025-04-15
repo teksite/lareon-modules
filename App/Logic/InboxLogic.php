@@ -38,8 +38,8 @@ class InboxLogic
                 'ip_address' => request()->ip(),
                 'url' => $inputs['data_info']['url']
             ]);
-            event(new NewFormRegisteredEvent($form, $inbox));
 
+            event(new NewFormRegisteredEvent($form, $inbox));
             return $inbox;
         });
     }

@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class FormInboxesExport implements ShouldAutoSize,fromQuery ,WithMapping ,WithHeadings
+class FormInboxesExport implements ShouldAutoSize, fromQuery, WithMapping, WithHeadings
 {
     use Exportable;
 
@@ -21,21 +21,20 @@ class FormInboxesExport implements ShouldAutoSize,fromQuery ,WithMapping ,WithHe
 
     public function map($row): array
     {
-        dd($row);
-        $dataForm=json_decode($row->data , true);
-        return collect($dataForm)->map(function ($item ,$key) {
-            if (is_array($item)) return implode(",", $item);
-            return $item;
-        })->merge(['form title'=>$row->form->title,'url'=>$row->url ,'date'=>$row->created_at])->toArray();
-
+        $dataForm = $row->data;
+        return collect($dataForm)->map(function ($item) {
+            return is_array($item) ? implode(",", $item) : $item;
+        })->merge(['form title' => $row->form->title, 'url' => $row->url, 'created at' => $row->created_at, 'ip' => $row->ip_address])
+            ->toArray();
     }
+
     public function headings(): array
     {
         return $this->query->count() ? $this->query->first()->data->keys()->toArray() : [];
     }
 
-    public function query()
+    public function query(): Builder
     {
-        return  $this->query;
+        return $this->query;
     }
 }

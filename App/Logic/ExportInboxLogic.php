@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Questionnaire\App\Logic;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Lareon\Modules\Questionnaire\App\Exports\FormInboxesExport;
@@ -13,21 +14,20 @@ class ExportInboxLogic
 {
     public function export(array $input)
     {
-        $filename='receives-'.Carbon::now()->format('Y_m_d_H_i_s').'.xlsx';
+        return app(ServiceWrapper::class)(function () use ($input) {
+            $filename = sprintf('receives-%s.xlsx', Carbon::now()->format('Y_m_d_H_i_s'));
+            $query = $this->buildQuery($input);
 
-        return app(ServiceWrapper::class)(function () use ($filename ,$input) {
-            $query =Inbox::query()
-                ->when(isset($input['form']),function($query) use ($input){
-                    return $query->where('form_id',$input['form']);
-                })
-                ->when(isset($input['date']['start']),function($query) use ($input){
-                    return $query->whereDate('created_at','>=',$input['date']['start']);
-                })
-                ->when(isset($input['date']['end']),function($query) use ($input){
-                    return $query->whereDate('created_at','<=',$input['date']['end']);
-                });
             return Excel::download(new FormInboxesExport($query), $filename);
-        } ,hasTransaction:false);
+        }, hasTransaction: false);
+    }
+
+    private function buildQuery(array $input): Builder
+    {
+        return Inbox::query()
+            ->when($input['form'] ?? null, fn($query, $form) => $query->where('form_id', $form))
+            ->when($input['date']['start'] ?? null, fn($query, $start) => $query->whereDate('created_at', '>=', $start))
+            ->when($input['date']['end'] ?? null, fn($query, $end) => $query->whereDate('created_at', '<=', $end));
     }
 }
 

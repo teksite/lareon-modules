@@ -1,4 +1,4 @@
-<form action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}">
+<form action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
     @csrf
     <input type="hidden" readonly value="{{encrypt($form->id)}}" name="data_info[identify]">
     <input type="hidden" class="hidden" name="data_info[fullname]">

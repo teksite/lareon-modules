@@ -14,6 +14,9 @@ return [
             ], [
                 'title' => 'export',
                 'route' => 'admin.questionnaire.inboxes.export.index',
+            ], [
+                'title' => 'analytics',
+                'route' => 'admin.questionnaire.inboxes.analytics.show',
             ],
         ],
     ],
