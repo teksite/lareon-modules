@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Blog\App\Http\Controllers\Web\Client\Posts;
 
+use Illuminate\Support\Facades\View;
 use Lareon\Modules\Blog\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Blog\App\Models\Post;
@@ -15,6 +16,8 @@ class PostsController extends Controller
 
     public function index()
     {
+        //TODO change it Blog:SEO
+
         $seo =$this->seo->generate(null ,
             [
                 'title'=>'111111111111' ,
@@ -37,6 +40,6 @@ class PostsController extends Controller
     public function show(Post $post)
     {
         $seo =$this->seo->generate($post)->result;
-        dd($seo);
+        return View::first(['pages.posts.template.'.$post->template , 'pages.posts.show'] ,compact('post' , 'seo'));
     }
 }

@@ -13,15 +13,17 @@ use Lareon\CMS\App\Cast\ImageCast;
 use Lareon\CMS\App\Enums\PublishStatusEnum;
 use Lareon\CMS\App\Models\Scopes\PublishStatusScope;
 use Lareon\CMS\App\Models\User;
+use Lareon\Modules\Comment\App\Models\Comment;
+use Lareon\Modules\Comment\App\Traits\Commentable;
 use Lareon\Modules\Seo\App\Interfaces\HasSeo;
-use Lareon\Modules\Seo\App\Traits\AddSeo;
+use Lareon\Modules\Seo\App\Traits\SeoAble;
 use Lareon\Modules\Seo\App\Traits\AddToSitemap;
-use Lareon\Modules\Tag\App\Traits\HasTag;
+use Lareon\Modules\Tag\App\Traits\Taggable;
 use Teksite\Extralaravel\Casts\SlugCast;
 
 class Post extends Model implements HasSeo
 {
-    use SoftDeletes, HasTag, AddSeo;
+    use SoftDeletes, Taggable, SeoAble, Commentable;
 
     protected $table = 'blog_posts';
 
@@ -97,4 +99,5 @@ class Post extends Model implements HasSeo
     {
         return 'blog_post';
     }
+
 }
