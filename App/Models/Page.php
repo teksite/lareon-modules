@@ -9,14 +9,15 @@ use Illuminate\Validation\Rule;
 use Lareon\CMS\App\Cast\ImageCast;
 use Lareon\CMS\App\Enums\PublishStatusEnum;
 use Lareon\CMS\App\Models\Scopes\PublishStatusScope;
+use Lareon\Modules\Comment\App\Traits\Commentable;
 use Lareon\Modules\Seo\App\Interfaces\HasSeo;
-use Lareon\Modules\Seo\App\Traits\AddSeo;
-use Lareon\Modules\Tag\App\Traits\HasTag;
+use Lareon\Modules\Seo\App\Traits\SeoAble;
+use Lareon\Modules\Tag\App\Traits\Taggable;
 use Teksite\Extralaravel\Casts\SlugCast;
 
 class Page extends Model implements HasSeo
 {
-    use SoftDeletes, HasTag, AddSeo;
+    use SoftDeletes, Taggable, SeoAble ,Commentable;
 
     protected $fillable = ['parent_id', 'title', 'slug', 'body', 'excerpt', 'featured_image', 'template', 'publish_status', 'published_at'];
 
