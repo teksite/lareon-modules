@@ -1,0 +1,50 @@
+{
+    "name": "teksite/comment",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Comment"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Comment\\": "/",
+            "Lareon\\Modules\\Comment\\App\\": "App/",
+            "Lareon\\Modules\\Comment\\Database\\Factories\\": "Database/Factories/",
+            "Lareon\\Modules\\Comment\\Database\\Seeders\\": "Database/Seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Comment\\Tests\\": "Tests/"
+        }
+    }
+}

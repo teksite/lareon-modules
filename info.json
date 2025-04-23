@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Comment",
+    "title": "Comment",
+    "alias": "comment",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Comment\\App\\Providers\\CommentServiceProvider"
+}
+
