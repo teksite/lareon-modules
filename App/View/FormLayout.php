@@ -10,12 +10,14 @@ use Lareon\Modules\Questionnaire\App\Models\Form;
 class FormLayout extends Component
 {
     public Form $form;
+    public bool $ajax;
     /**
      * Create a new component instance.
      */
-    public function __construct(int|string $form)
+    public function __construct(int|string $form ,$ajax =true)
     {
         $this->form = Form::find($form);
+        $this->ajax =$ajax;
     }
 
     /**

@@ -1,28 +1,15 @@
 <?php
-
 namespace Lareon\Modules\Questionnaire\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Crypt;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\Inbox;
+use Teksite\Extralaravel\Http\ApiFormRequest;
 
-class NewRegistrationRequest extends FormRequest
+class NewRegistrationApiRequest extends ApiFormRequest
 {
-    public $form;
-
     /**
      * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -49,5 +36,4 @@ class NewRegistrationRequest extends FormRequest
             abort(404, 'something goes wrong');
         }
     }
-
 }

@@ -1,8 +1,8 @@
-<form action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
+<form class="{{$ajax ? 'formMode' : '' }}" action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
     @csrf
-    <input type="hidden" readonly value="{{encrypt($form->id)}}" name="data_info[identify]">
-    <input type="hidden" class="hidden" name="data_info[fullname]">
+    <input type="hidden" value="{{encrypt($form->id)}}" name="data_info[identify]"  readonly>
     <input type="hidden" class="hidden" name="data_info[url]" value="{{url()->current()}}" readonly>
+    <input type="hidden" class="hidden" name="data_info[fullname]">
     @if($form->template)
         <div>
             @include("forms.$form->template")
