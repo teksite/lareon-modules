@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Seo\App\Models\SeoSitemap;
 
-trait AddSeo
+trait SeoAble
 {
     use AddToSitemap, AddToSeoModel;
 
