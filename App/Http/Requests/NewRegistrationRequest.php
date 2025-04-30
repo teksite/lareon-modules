@@ -4,6 +4,7 @@ namespace Lareon\Modules\Questionnaire\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Crypt;
+use Lareon\Modules\Captcha\App\Rules\CaptchaRule;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\Inbox;
 
@@ -28,7 +29,9 @@ class NewRegistrationRequest extends FormRequest
     {
         $this->loadForm();
         $formRules = $this->form->validationRules->rules->pluck('rules', 'field')->toArray();
-        return array_merge(Inbox::rulesForModels(), $formRules);
+        return array_merge(Inbox::rulesForModels(), $formRules, [
+            'g-recaptcha-response'=>new CaptchaRule()
+        ]);
     }
 
     protected function passedValidation(): void

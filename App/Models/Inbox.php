@@ -5,7 +5,6 @@ namespace Lareon\Modules\Questionnaire\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Lareon\CMS\App\Models\User;
-use Teksite\Extralaravel\Casts\JsonCast;
 
 class Inbox extends Model
 {
@@ -16,9 +15,9 @@ class Inbox extends Model
     protected $fillable = ['form_id', 'data', 'url', 'note', 'user_id', 'ip_address', 'read_at'];
 
     protected $casts = [
-        'data' => JsonCast::class,
+        'data' => 'json',
         'read_at' => 'datetime',
-        'note' => JsonCast::class
+        'note' => 'json',
     ];
 
     public static function rules(): array

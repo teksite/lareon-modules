@@ -24,7 +24,6 @@
         "laravel": {
             "providers": [],
             "aliases": {
-
             }
         }
     },
@@ -36,7 +35,6 @@
             "Lareon\\Modules\\Questionnaire\\Database\\Seeders\\": "Database/Seeders/"
         },
          "files": [
-
          ]
     },
     "require-dev": {

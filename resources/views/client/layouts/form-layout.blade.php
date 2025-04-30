@@ -1,4 +1,4 @@
-<form class="{{$ajax ? 'formMode' : '' }}" action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
+<form class="{{isset($ajax) && $ajax ? 'formMode' : '' }}" action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
     @csrf
     <input type="hidden" value="{{encrypt($form->id)}}" name="data_info[identify]"  readonly>
     <input type="hidden" class="hidden" name="data_info[url]" value="{{url()->current()}}" readonly>
@@ -16,6 +16,7 @@
             {!! $slot !!}
         </div>
     @endif
+    @captcha
     @if(isset($button))
         {!! $button !!}
     @else

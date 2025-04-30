@@ -16,7 +16,7 @@
         <x-lareon::sections.title :value="old('title') ?? $form->title" name="title" :placeholder="__('enter a unique :title',['title'=>__('title')])" :required="true"/>
         <x-lareon::sections.textarea dir="ltr" :title="__('body')" name="body" :placeholder="__('inset form fields (html)')" :required="false" rows="15" :open="true">{{old('body') ?? $form->body}}</x-lareon::sections.textarea>
         <x-questionnaire::sections.announcements :value="old('announcements') ?? $form->announcement?->toArray()" />
-        <x-questionnaire::sections.rules :value="old('rules') ?? $form->validationRules?->rules->toArray()"/>
+        <x-questionnaire::sections.rules :value="old('rules') ?? $form->validationRules?->rules"/>
     @endsection
     @section('aside')
         <x-lareon::sections.template :value="old('template') ?? $form->template" :accordion="true" path="forms"/>

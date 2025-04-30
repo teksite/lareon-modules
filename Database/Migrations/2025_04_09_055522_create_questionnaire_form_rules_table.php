@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('questionnaire_form_rules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('form_id')->constrained('questionnaire_forms')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->text('rules')->nullable();
+            $table->json('rules')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('form_id')->nullable()->constrained('questionnaire_forms')->nullOnDelete()->cascadeOnUpdate();
             $table->json('data');
             $table->string('url')->nullable();
-            $table->text('note')->nullable();
+            $table->json('note')->nullable();
             $table->ipAddress();
             $table->timestamp('read_at')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();

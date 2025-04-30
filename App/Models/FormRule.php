@@ -3,7 +3,6 @@
 namespace Lareon\Modules\Questionnaire\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Teksite\Extralaravel\Casts\JsonCast;
 
 class FormRule extends Model
 {
@@ -12,7 +11,7 @@ class FormRule extends Model
     protected $fillable = ['form_id', 'rules'];
 
     protected $casts = [
-        'rules' => JsonCast::class,
+        'rules' => 'json',
     ];
 
     public static function rulesForModels(): array

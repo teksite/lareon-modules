@@ -2,6 +2,7 @@
 namespace Lareon\Modules\Questionnaire\App\Http\Requests;
 
 use Illuminate\Support\Facades\Crypt;
+use Lareon\Modules\Captcha\App\Rules\CaptchaRule;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\Inbox;
 use Teksite\Extralaravel\Http\ApiFormRequest;
@@ -14,8 +15,11 @@ class NewRegistrationApiRequest extends ApiFormRequest
     public function rules(): array
     {
         $this->loadForm();
-        $formRules = $this->form->validationRules->rules->pluck('rules', 'field')->toArray();
-        return array_merge(Inbox::rulesForModels(), $formRules);
+
+        $formRules = collect($this->form->validationRules->rules)->pluck('rules', 'field')->toArray();
+        return array_merge(Inbox::rulesForModels(), $formRules ,[
+            'g-recaptcha-response'=>new CaptchaRule()
+        ]);
     }
 
     protected function passedValidation(): void
