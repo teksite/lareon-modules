@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Comment\App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Lareon\CMS\App\Models\User;
@@ -29,6 +30,15 @@ class Comment extends Model
             'parent_id'=>'nullable',
         ];
     }
+
+   protected static function booted()
+   {
+       parent::booted();
+       static::addGlobalScope('hasModel', function (Builder $builder) {
+           $builder->whereHas('model');
+       });
+
+   }
 
     public function user()
     {
