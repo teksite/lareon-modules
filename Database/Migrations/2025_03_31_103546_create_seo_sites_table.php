@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('seo_site', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
-            $table->text('value')->nullable();
+            $table->json('value')->nullable();
             $table->string('state')->nullable();
             $table->timestamps();
         });
         Schema::create('seo_site_en', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
-            $table->text('value')->nullable();
+            $table->json('value')->nullable();
             $table->string('state')->nullable();
             $table->timestamps();
         });

@@ -4,8 +4,6 @@ namespace Lareon\Modules\Seo\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Lareon\Modules\Seo\App\Enums\ChangeFreqEnum;
-use Teksite\Extralaravel\Casts\JsonCast;
 
 class SeoSitemap extends Model
 {
@@ -14,8 +12,8 @@ class SeoSitemap extends Model
     protected $casts=[
         "lastmod"=>"datetime",
         "changefreq"=>"string",
-        "image"=>JsonCast::class,
-        "video"=>JsonCast::class,
+        "image"=>'json',
+        "video"=>'json',
     ];
 
     static function rulesForModels() :array

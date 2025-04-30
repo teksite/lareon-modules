@@ -4,8 +4,6 @@ namespace Lareon\Modules\Seo\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Teksite\Extralaravel\Casts\JsonCast;
-use function Laravel\Prompts\select;
 
 class SeoSite extends Model
 {
@@ -22,7 +20,7 @@ class SeoSite extends Model
 
     protected $casts=[
         'state'=>'boolean',
-        'value'=>JsonCast::class,
+        'value'=>'json',
     ];
 
     public static function rules()

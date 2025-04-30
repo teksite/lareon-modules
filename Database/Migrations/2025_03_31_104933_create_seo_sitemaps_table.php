@@ -19,12 +19,10 @@ return new class extends Migration
             $table->decimal('priority', 3, 1)->default(0.5);
             $table->enum('changefreq', ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'])->default('monthly');
             $table->timestamp('lastmod')->nullable();
-            $table->text('image')->nullable();
-            $table->text('video')->nullable();
+            $table->json('image')->nullable();
+            $table->json('video')->nullable();
             $table->timestamp('active')->nullable()->default(now());
             $table->timestamps();
-
-            $table->index(['group' , 'active']);
 
         });
     }
